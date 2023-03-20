@@ -13,7 +13,7 @@ import {
   ModalCloseButton,
   Button
 } from '@chakra-ui/react'
-import RoomLayoutUI, {ChooseLayoutModal} from './Components/Core/RoomLayoutUI'
+import InitiativeHome, {ChooseLayoutModal} from './Components/Core/RoomLayoutUI'
 let buttonClicked = false;
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
   // let Cabinet2 = new Cabinet({ cabinetID: 2 })
   return(
     <ChakraProvider>
-      <RoomLayoutUI/>
+      <InitiativeHome/>
     </ChakraProvider>
   )
   // return RoomLayoutUI.chooseLayoutModal
