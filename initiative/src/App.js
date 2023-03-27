@@ -13,7 +13,7 @@ import {
   ModalCloseButton,
   Button
 } from '@chakra-ui/react'
-import InitiativeHome, {ChooseLayoutModal} from './Components/Core/RoomLayoutUI'
+import InitiativeHome from './Components/Core/InitiativeHome'
 let buttonClicked = false;
 
 function App() {

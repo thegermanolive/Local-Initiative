@@ -134,7 +134,7 @@ export function LaunchDrawer(props) {
     }
     //is "working" but throwing some error that need to be fixed
     function clickHandler(mouse) {
-        if(mouse.offsetX == undefined || mouse.offsetY == undefined )
+        if(mouse.offsetX === undefined || mouse.offsetY === undefined )
         {
             mouse.offsetX = mouse.screenX
             mouse.offsetY = mouse.screenY
@@ -152,13 +152,13 @@ export function LaunchDrawer(props) {
             // console.log("mouse x and y " + mouse.offsetX + " " + mouse.offsetY)
         }
         else if(roomIsClose === false) {
-            if(mouse.offsetX == undefined || mouse.offsetY == undefined )
+            if(mouse.offsetX === undefined || mouse.offsetY === undefined )
             {
                 mouse.offsetX = mouse.screenX
                 mouse.offsetY = mouse.screenY
             }
             if(isInStartingDot(mouse) ===false || LineArray.length < 2){
-                if(mouse.offsetX == undefined || mouse.offsetY == undefined )
+                if(mouse.offsetX === undefined || mouse.offsetY === undefined )
                 {
                     mouse.offsetX = mouse.screenX
                     mouse.offsetY = mouse.screenY
@@ -166,7 +166,7 @@ export function LaunchDrawer(props) {
                 toXY.x = mouse.offsetX
                 toXY.y = mouse.offsetY
 
-                // console.log("=================First Click========")
+                // console.log("=======First Click====")
                 drawClick()
                 pushLine = {
                     fromX:  fromXY.x,
@@ -183,7 +183,7 @@ export function LaunchDrawer(props) {
             else{
                 toXY.x = startingDot.x
                 toXY.y = startingDot.y
-                // console.log("=================Second Click========")
+                // console.log("=======Second Click====")
                 // console.log(fromXY.x +" " +fromXY.y)
                 drawClick()
                 pushLine ={
@@ -219,7 +219,7 @@ export function LaunchDrawer(props) {
 
     // draws the lines when the mouse moves
     function moveHandler(mouse) {
-        if(mouse.offsetX == undefined || mouse.offsetY == undefined )
+        if(mouse.offsetX === undefined || mouse.offsetY === undefined )
         {
             mouse.offsetX = mouse.screenX
             mouse.offsetY = mouse.screenY
@@ -258,7 +258,7 @@ export function LaunchDrawer(props) {
 
     //return true or false if it is within 20 pizels of the starting point
     function isInStartingDot(mouse) {
-        if(mouse.offsetX == undefined || mouse.offsetY == undefined )
+        if(mouse.offsetX === undefined || mouse.offsetY === undefined )
         {
             mouse.offsetX = mouse.screenX
             mouse.offsetY = mouse.screenY
@@ -464,7 +464,7 @@ async function TurnOnRoom(lineArray, lengthScale, props) {
     
 
     //Just for passing the rests
-    if (tempRoomID == undefined || tempRoomID == null)
+    if (tempRoomID === undefined || tempRoomID === null)
     {
         tempRoomID = 9999    
     }
@@ -487,7 +487,7 @@ async function TurnOnRoom(lineArray, lengthScale, props) {
 // function RenderRoom(props){
 //     console.log(numberOfWalls)
 //     console.log()
-//     if (modalComplete == true) {
+//     if (modalComplete === true) {
 //         return (
 //             <div className="App" >
 //                 <Room roomID={roomID} numberOfWalls={numberOfWalls} />

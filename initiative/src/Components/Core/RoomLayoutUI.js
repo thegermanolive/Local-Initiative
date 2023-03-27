@@ -100,7 +100,7 @@ function LaunchModal() {
                                 src="./squareLayoutImg.svg"
                                 borderRadius='20px'
                             />
-                            Square
+                            asdas
                         </Box>
                         <Spacer />
                         <Box
@@ -182,7 +182,7 @@ function LaunchModal() {
                     <Text fontSize={'md'} pb='1em'> Pleaase Enter a Wall Length (in Meters) for your square room</Text>
                     <Input type="number" value={wallLength} onChange={(e) => { setWallLength(parseFloat(e.target.value)) }}
                         placeholder='Length' width='250px' borderColor={'gray.500'}></Input>
-                    {noError == false ? (
+                    {noError === false ? (
                         <div style={{ color: "#ff0000" }}>
                             The Wall Lengths must be between 0.1 and 25 Meters
                         </div>) : <p></p>
@@ -234,7 +234,7 @@ function LaunchModal() {
                         <Stack spacing={3}>
                             <Input type="number" value={wallLength} onChange={(e) => { setWallLength(parseFloat(e.target.value)) }} placeholder='Length' width='250px' borderColor={'gray.500'}></Input>
                             <Input type="number" value={wallWidth} onChange={(e) => { setWallWidth(parseFloat(e.target.value)) }} placeholder='Width' width='250px' borderColor={'gray.500'}></Input>
-                            {noError == false ? (
+                            {noError === false ? (
                                 <div style={{ color: "#ff0000" }}>
                                     Length and Width must both be between 0.1 and 25 Meters
                                 </div>) : <p></p>
@@ -261,7 +261,7 @@ function LaunchModal() {
      * This method will fire when the modal's forms have been filled out with valid information. It will then reset and close the modal, and begin rendering the rest of the room;
      */
     async function SubmitMethod(){
-        if(ModalType == "Square")
+        if(ModalType === "Square")
         {
             await TurnOnRoom(wallLength,wallLength) // begin Rendering the Room, using only the Length as the measurements
         }
@@ -328,15 +328,15 @@ function LaunchModal() {
                 {ModalType != "Square" && ModalType != "Rectangle" && // If statements that will fill in the body of the modal, based on the State value ModalType. This one is default
                     ChooseLayoutModal()
                 }
-                {ModalType == "Square" &&
+                {ModalType === "Square" &&
                     squareRoomLayoutModal()
                 }
-                {ModalType == "Rectangle" &&
+                {ModalType === "Rectangle" &&
                     RectangleRoomLayoutModal()
                 }
             </Modal>
 
-            {is2DViewVisible == true && 
+            {is2DViewVisible === true && 
                  
                 open2DView()
             }

@@ -38,14 +38,14 @@ export async function makeAllWalls(length, width, roomID){ // Remove Room ID fro
                                                               // positions negative, or reverse the rotations. Idk make it look good.
     let LastWall = null;
     for (let i = 0; i < 4; i++){
-        let wallLength = (i%2==0?length:width)
+        let wallLength = (i%2===0?length:width)
         wallArray.push(createStraightWall(i+1,XPositions[i],ZPositions[i],wallLength,tempWallHeight,rotations[i],LastWall))
         LastWall = wallArray[i] // Put a reference to the current wall as the last wall in the database, so that the walls refer to each other correctly in order.
     }
     // Make the Room, add room and walls to Database
     let SomeRoom = {roomID: parseInt(roomID)}
     addRoomAndWallsToDB(SomeRoom,wallArray)
-    // console.log("========Walls generated using square option=========")
+    // console.log("====Walls generated using square option=====")
     // console.log(wallArray)
 
     // Render room // THIS WILL NOW BE HANDLED IN ROOM.JS
@@ -125,7 +125,7 @@ export function makeAllCustomWalls(roomID, lineArray, lengthScale){
     }
 
 
-    // console.log("=============In Walljs, wall array before sending into database==============")
+    // console.log("======In Walljs, wall array before sending into database======")
     // console.log(wallArray)
   
     let SomeRoom = {roomID:parseInt(roomID)}

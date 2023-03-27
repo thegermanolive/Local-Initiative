@@ -109,12 +109,16 @@ function LaunchModal() {
                             mx='30px'
                             borderColor='#aaaaaa'
                             bg='#e0e0e0'
+                            boxSize='m'
+                            px='25px'
                             onClick={() => {
                                 setModalType("DM")
                             }}
                         >
                             <Image
-                                src="./squareLayoutImg.svg"
+                                boxSize='150px'
+                                
+                                src="./dungeonMaster.svg"
                                 borderRadius='20px'
                             />
                             DM
@@ -127,12 +131,15 @@ function LaunchModal() {
                             p='2px'
                             borderColor='#aaaaaa'
                             bg='#e0e0e0'
+                            boxSize='m'
                             onClick={() => {
+                                console.log(PLAYERNAMES.includes('asad'))
                                 setModalType("Player")
                             }}
                         >
                             <Image
-                                src="./rectangleLayoutImg.svg"
+                                boxSize='200px'
+                                src="./nat1.svg"
                                 borderRadius='20px'
                             />
                             Player
@@ -155,6 +162,7 @@ function LaunchModal() {
     // ]
     function onSubmitDM(e){
         if (dmName && DMNAMES.includes(dmName)){
+            window.alert(dmName)
             SubmitMethod(dmName)
         } else {
             setError(false)
@@ -180,8 +188,8 @@ function LaunchModal() {
 
                     <Text fontSize={'md'} pb='1em'> Pleaase Enter Your Name</Text>
                     <Input type="text" value={dmName} onChange={(e) => { setDMName(e.target.value) }}
-                        placeholder='Length' width='250px' borderColor={'gray.500'}></Input>
-                    {noError == false ? (
+                    placeholder='Name' width='250px' borderColor={'gray.500'}></Input>
+                    {noError === false ? (
                         <div style={{ color: "#ff0000" }}>
                             Incorrect Name
                         </div>) : <p></p>
@@ -203,11 +211,12 @@ function LaunchModal() {
         )
     }
 
-    function onSubmitPlayer(){
+    function onSubmitPlayer(e){
 
         if (playerName && PLAYERNAMES.includes(playerName))
         {
-            SubmitMethod(playerName)
+            console.log(PLAYERNAMES)
+            // SubmitMethod(playerName)
         } else {
             setError(false)
         }
@@ -229,8 +238,9 @@ function LaunchModal() {
                 {/* <ModalCloseButton /> should be deleted when finished */}
                 <ModalBody>
                     <Text fontSize={'md'} pb='1em'> Pleaase Enter Your Name</Text>
-                            <Input type="number" value={dmName} onChange={(e) => { setDMName(e.target.value) }} placeholder='Length' width='250px' borderColor={'gray.500'}></Input>
-                            {noError == false ? (
+                            <Input type="text" value={playerName} onChange={(e) => { setPlayerName(e.target.value) }} 
+                            placeholder='Name' width='250px' borderColor={'gray.500'}></Input>
+                            {noError === false ? (
                                 <div style={{ color: "#ff0000" }}>
                                     Invalid Name
                                 </div>) : <p></p>
@@ -254,13 +264,13 @@ function LaunchModal() {
      * This method will fire when the modal's forms have been filled out with valid information. It will then reset and close the modal, and begin rendering the rest of the room;
      */
     async function SubmitMethod(){
-        if(ModalType == "Square")
+        if(ModalType === "Square")
         {
-            await TurnOnRoom(dmName,dmName) // begin Rendering the Room, using only the Length as the measurements
+            // await TurnOnRoom(dmName,dmName) // begin Rendering the Room, using only the Length as the measurements
         }
         else
         {
-            await TurnOnRoom(dmName,playerName) // begin Rendering the Room, using both the Length and the Width as measurements
+            // await TurnOnRoom(dmName,playerName) // begin Rendering the Room, using both the Length and the Width as measurements
         }
         onClose() // close the modal.
         setModalType("Layout") // Reset the Modal to layout mode, incase you get back into it somehow.
@@ -316,10 +326,10 @@ function LaunchModal() {
                 {ModalType != "DM" && ModalType != "Player" && // If statements that will fill in the body of the modal, based on the State value ModalType. This one is default
                     ChooseLayoutModal()
                 }
-                {ModalType == "DM" &&
+                {ModalType === "DM" &&
                     DMModal()
                 }
-                {ModalType == "Player" &&
+                {ModalType === "Player" &&
                     PlayerScreen()
                 }
             </Modal>

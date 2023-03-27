@@ -140,7 +140,7 @@ function GetCabinetString(Cabinets) {
         for (let att in Cab)
         {
             let value = Cab[att]
-            if (att == "posX")
+            if (att === "posX")
             {console.log(Cab.posX)}
 
             CabinetString += (typeof value === 'string') ? // If the value is a string type, return surrounded with ""

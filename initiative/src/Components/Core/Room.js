@@ -86,7 +86,7 @@ class Room extends React.Component {
                 
             })
             })
-            if(this.state.wallList.length == this.numberOfWalls)
+            if(this.state.wallList.length === this.numberOfWalls)
             {
                 this.setState({didInitialRender: true})
             }
@@ -95,7 +95,7 @@ class Room extends React.Component {
        
     render(){
         this.CheckWallRendering()
-        if (this.state.didInitialRender == true)
+        if (this.state.didInitialRender === true)
         {
             return(
                 <div className="Room">

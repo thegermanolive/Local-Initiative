@@ -58,7 +58,7 @@ export default class AttributeMenu extends Component{
             cabData.attributes = {}
         }
 
-        const doorData = this.state.doorOptionList.find(({doorID})=> doorID==e.target.value)
+        const doorData = this.state.doorOptionList.find(({doorID})=> doorID===e.target.value)
         let newSelection =  Object.assign(new Door(), doorData)
         cabData.attributes.door = newSelection
         this.props.room.setState({})

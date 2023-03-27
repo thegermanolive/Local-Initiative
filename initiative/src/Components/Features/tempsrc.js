@@ -105,7 +105,7 @@ function render() {
 
     function onMouseDown(evt) {
                
-        if(evt.which == 3) return;
+        if(evt.which === 3) return;
     
 
     var x = ( event.clientX / window.innerWidth ) * 2 - 1;

@@ -30,7 +30,7 @@ class Cabinet extends React.Component {
             return
         }
 
-        this.valid = cabData.modelPath.substr(cabData.modelPath.length - 4, 4).toLowerCase() == ".obj"
+        this.valid = cabData.modelPath.substr(cabData.modelPath.length - 4, 4).toLowerCase() === ".obj"
         if (!this.valid){
             // console.log("File is of incorrect type!")
         }
@@ -107,7 +107,7 @@ class Cabinet extends React.Component {
 
             }
         } catch (err) {
-            if (typeof err == TypeError) {
+            if (typeof err === TypeError) {
 
             }
         }

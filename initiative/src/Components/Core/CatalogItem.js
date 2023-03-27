@@ -140,7 +140,7 @@ export function attachToWall(intersectedWall, cabinet, room) {
     // the wallCurrent with the current wall and break it out of the loop
     for (let wall of room.state.wallList)
     {
-        if (wall.wallNumber == wallNumber)
+        if (wall.wallNumber === wallNumber)
         {
             wallCurrent = wall;
             break;

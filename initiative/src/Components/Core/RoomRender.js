@@ -89,7 +89,7 @@ export default class RoomRender extends Component {
                         <mesh ref={(wall) => this.state.wallArrayList.current.push(wall)} userData={{wallNumber: wall.wallNumber}} name={"Wall" + wall.wallNumber} key={wall.wallNumber}  onClick={() => { this.props.onClickHandler({}) }} rotation-y={wall.wallRotation} 
                         position={[
     
-                                // ==================New Code==========================
+                                // =======New Code=========
                                 // wall.wallLength/2 * Math.abs(Math.cos(wall.wallRotation)) + wall.posX * Math.abs(Math.sin(wall.wallRotation)),  // Math function to solve for center X pos of the wall
                             wall.posX * CONVERSION + (wall.wallLength* CONVERSION/2.0 * (Math.sin(wall.wallRotation+(Math.PI/2.0)))),
                             wall.wallHeight* CONVERSION / 2.0, 
