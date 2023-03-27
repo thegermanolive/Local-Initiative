@@ -25,6 +25,23 @@ let roomID ;
 let numberOfWalls;
 let make2DViewVisible = false
 
+const DMNAMES=[
+    'OLIVER',
+    'ERIC',
+    'JAYDEN',
+    'DALLAS'
+]
+
+const PLAYERNAMES=[
+    'OLIVER',
+    'ERIC',
+    'JAYDEN',
+    'DALLAS',
+    'ABBY',
+    'KATHERINE',
+    'JORDON'
+]
+
 export default class InitiativeHome extends Component {
 
     constructor() {
@@ -54,9 +71,9 @@ function LaunchModal() {
     // state for Modal
     const [ModalType, setModalType] = useState("Layout")
     // length state values
-    const [wallLength, setWallLength] = useState()
+    const [dmName, setDMName] = useState()
     // width state values
-    const [wallWidth, setWallWidth] = useState()
+    const [playerName, setPlayerName] = useState()
     // Validation state values
     const [noError, setError] = useState(true)
 
@@ -93,14 +110,14 @@ function LaunchModal() {
                             borderColor='#aaaaaa'
                             bg='#e0e0e0'
                             onClick={() => {
-                                setModalType("Square")
+                                setModalType("DM")
                             }}
                         >
                             <Image
                                 src="./squareLayoutImg.svg"
                                 borderRadius='20px'
                             />
-                            Square
+                            DM
                         </Box>
                         <Spacer />
                         <Box
@@ -111,39 +128,16 @@ function LaunchModal() {
                             borderColor='#aaaaaa'
                             bg='#e0e0e0'
                             onClick={() => {
-                                setModalType("Rectangle")
+                                setModalType("Player")
                             }}
                         >
                             <Image
                                 src="./rectangleLayoutImg.svg"
                                 borderRadius='20px'
                             />
-                            Rectangle
+                            Player
                         </Box>
                         <Spacer />
-                        <Spacer />
-                        <Box
-                            as='button'
-                            border='2px'
-                            borderRadius='20px'
-                            p='2px'
-                            mx='30px'
-                            borderColor='#aaaaaa'
-                            bg='#e0e0e0'
-                            onClick={() => {
-                                onClose();
-                                // modalComplete = true;
-                                // set2DViewVisibility(true)
-                                set2DView(true)
-
-                            }}
-                        >
-                            <Image
-                                src="./customLayoutImg.svg"
-                                borderRadius='20px'
-                            />
-                            Custom Layout
-                        </Box>
                         <Spacer />
                     </Flex>
                 </ModalBody>
@@ -153,10 +147,15 @@ function LaunchModal() {
     }
 
 
-    function onSubmitSquareHandler(e){
-        if (wallLength && wallLength >= 0.1 && wallLength < 25)
-        {
-            SubmitMethod()
+    // const DMNAMES=[
+    //     'OLIVER',
+    //     'ERIC',
+    //     'JAYDEN',
+    //     'DALLAS'
+    // ]
+    function onSubmitDM(e){
+        if (dmName && DMNAMES.includes(dmName)){
+            SubmitMethod(dmName)
         } else {
             setError(false)
         }
@@ -170,21 +169,21 @@ function LaunchModal() {
      *  -If no errors will launch a room with proper dimensions
      * 
      */
-    function squareRoomLayoutModal() { 
+    function DMModal() { 
         return(
 
             <form onSubmit={e=>{e.preventDefault();}}>
             <ModalContent>
-                <ModalHeader fontSize={'3xl'} pb="0">Square Modal</ModalHeader>
+                <ModalHeader fontSize={'3xl'} pb="0">DM Modal</ModalHeader>
                 {/* <ModalCloseButton /> should be deleted when finished */}
                 <ModalBody>
 
-                    <Text fontSize={'md'} pb='1em'> Pleaase Enter a Wall Length (in Meters) for your square room</Text>
-                    <Input type="number" value={wallLength} onChange={(e) => { setWallLength(parseFloat(e.target.value)) }}
+                    <Text fontSize={'md'} pb='1em'> Pleaase Enter Your Name</Text>
+                    <Input type="text" value={dmName} onChange={(e) => { setDMName(e.target.value) }}
                         placeholder='Length' width='250px' borderColor={'gray.500'}></Input>
                     {noError == false ? (
                         <div style={{ color: "#ff0000" }}>
-                            The Wall Lengths must be between 0.1 and 25 Meters
+                            Incorrect Name
                         </div>) : <p></p>
                     }
                 </ModalBody>
@@ -193,10 +192,10 @@ function LaunchModal() {
 
                 <Button variant='ghost' mr={3} onClick={() => { // this Button will take you back to the previous page, as well as clearing the Length and Width and the Errors
                         setError(true)
-                        setWallLength('')
+                        setDMName('')
                         setModalType("Layout")
                     }}>Cancel</Button>
-                    <Button colorScheme='blue' type="submit" onClick={(e)=>onSubmitSquareHandler(e)}>Submit</Button>
+                    <Button colorScheme='blue' type="submit" onClick={(e)=>onSubmitDM(e)}>Submit</Button>
 
                 </ModalFooter>
             </ModalContent>
@@ -204,11 +203,11 @@ function LaunchModal() {
         )
     }
 
-    function onSubmitRectangleHanlder(){
+    function onSubmitPlayer(){
 
-        if (wallLength && wallWidth && wallLength >= 0.1 && wallLength < 25 && wallWidth >= 0.1 && wallWidth < 25)
+        if (playerName && PLAYERNAMES.includes(playerName))
         {
-            SubmitMethod()
+            SubmitMethod(playerName)
         } else {
             setError(false)
         }
@@ -222,35 +221,29 @@ function LaunchModal() {
      *  -If no errors will launch a room with proper dimensions
      * 
      */
-    function RectangleRoomLayoutModal() {
+    function PlayerScreen() {
         return(
             <form>
             <ModalContent>
-                <ModalHeader fontSize={'3xl'} pb="0">Rectangle Modal</ModalHeader>
+                <ModalHeader fontSize={'3xl'} pb="0">Player Modal</ModalHeader>
                 {/* <ModalCloseButton /> should be deleted when finished */}
                 <ModalBody>
-                    <Text fontSize={'md'} pb='1em'> Please Enter the Wall Dimensions (in Meters) for your rectangular room</Text>
-                    <FormControl isRequired>
-                        <Stack spacing={3}>
-                            <Input type="number" value={wallLength} onChange={(e) => { setWallLength(parseFloat(e.target.value)) }} placeholder='Length' width='250px' borderColor={'gray.500'}></Input>
-                            <Input type="number" value={wallWidth} onChange={(e) => { setWallWidth(parseFloat(e.target.value)) }} placeholder='Width' width='250px' borderColor={'gray.500'}></Input>
+                    <Text fontSize={'md'} pb='1em'> Pleaase Enter Your Name</Text>
+                            <Input type="number" value={dmName} onChange={(e) => { setDMName(e.target.value) }} placeholder='Length' width='250px' borderColor={'gray.500'}></Input>
                             {noError == false ? (
                                 <div style={{ color: "#ff0000" }}>
-                                    Length and Width must both be between 0.1 and 25 Meters
+                                    Invalid Name
                                 </div>) : <p></p>
                             }
-                        </Stack>
-
-                    </FormControl>
                 </ModalBody>
 
                 <ModalFooter>
                 <Button variant='ghost' mr={3} onClick={() => { // this Button will take you back to the previous page, as well as clearing the Length and Width and the Errors
                         setError(true)
-                        setWallWidth('')
+                        setPlayerName('')
                         setModalType("Layout")
                     }}>Cancel</Button>
-                    <Button colorScheme='blue' type='submit' onClick={(e) => onSubmitRectangleHanlder(e) }>Submit</Button>
+                    <Button colorScheme='blue' type='submit' onClick={(e) => onSubmitPlayer(e) }>Submit</Button>
                 </ModalFooter>
             </ModalContent>
         </form>
@@ -263,11 +256,11 @@ function LaunchModal() {
     async function SubmitMethod(){
         if(ModalType == "Square")
         {
-            await TurnOnRoom(wallLength,wallLength) // begin Rendering the Room, using only the Length as the measurements
+            await TurnOnRoom(dmName,dmName) // begin Rendering the Room, using only the Length as the measurements
         }
         else
         {
-            await TurnOnRoom(wallLength,wallWidth) // begin Rendering the Room, using both the Length and the Width as measurements
+            await TurnOnRoom(dmName,playerName) // begin Rendering the Room, using both the Length and the Width as measurements
         }
         onClose() // close the modal.
         setModalType("Layout") // Reset the Modal to layout mode, incase you get back into it somehow.
@@ -281,11 +274,6 @@ function LaunchModal() {
             />
         )
         
-    }
-
-    function changeVals(rID, numWalls) {
-        roomID = rID
-        numberOfWalls = numWalls
     }
 
     async function setStateNumerOfWalls(num)
@@ -325,28 +313,17 @@ function LaunchModal() {
             <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false} closeOnEsc={false} size={'xl'}>
                 <ModalOverlay />
 
-                {ModalType != "Square" && ModalType != "Rectangle" && // If statements that will fill in the body of the modal, based on the State value ModalType. This one is default
+                {ModalType != "DM" && ModalType != "Player" && // If statements that will fill in the body of the modal, based on the State value ModalType. This one is default
                     ChooseLayoutModal()
                 }
-                {ModalType == "Square" &&
-                    squareRoomLayoutModal()
+                {ModalType == "DM" &&
+                    DMModal()
                 }
-                {ModalType == "Rectangle" &&
-                    RectangleRoomLayoutModal()
+                {ModalType == "Player" &&
+                    PlayerScreen()
                 }
             </Modal>
-
-            {is2DViewVisible == true && 
-                 
-                open2DView()
-            }
-        
-            {roomID !== undefined &&
-                 <RenderRoomStuff />
-            }
-             
-          
-            
+  
         </div>
     )
    
