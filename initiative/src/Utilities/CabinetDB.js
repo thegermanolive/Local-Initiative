@@ -8,6 +8,7 @@ import Wall from '../Models/WallModel';
 import { cabinetBuilder } from '../Entities/Cabinet';
 
 const Neo4jVars = [process.env.REACT_APP_BOLT_SERVERADDRESS, process.env.REACT_APP_NEO4J_USERNAME, process.env.REACT_APP_NEO4J_PASSWORD]
+// console.log(Neo4jVars)
 
 
 //This will create an instance of neode to interact with the database

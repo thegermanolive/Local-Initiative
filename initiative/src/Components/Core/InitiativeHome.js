@@ -20,6 +20,7 @@ import { useState } from "react";
 import Room from './Room'
 import { makeAllWalls } from "./Wall";
 import { TwoDimentionalDraw } from '../Features/TwoDimentionalDraw.js';
+import PlayerView from './PlayerView'
 let modalComplete = false;
 let roomID ;
 let numberOfWalls;
@@ -41,6 +42,11 @@ const PLAYERNAMES=[
     'KATHERINE',
     'JORDON'
 ]
+
+const MODALTYPES ={
+    PlayerModal: 'PlayerModal',
+    DMModal: 'DMModal'
+}
 
 export default class InitiativeHome extends Component {
 
@@ -112,7 +118,7 @@ function LaunchModal() {
                             boxSize='m'
                             px='25px'
                             onClick={() => {
-                                setModalType("DM")
+                                setModalType(MODALTYPES.DMModal)
                             }}
                         >
                             <Image
@@ -133,8 +139,7 @@ function LaunchModal() {
                             bg='#e0e0e0'
                             boxSize='m'
                             onClick={() => {
-                                console.log(PLAYERNAMES.includes('asad'))
-                                setModalType("Player")
+                                setModalType(MODALTYPES.PlayerModal)
                             }}
                         >
                             <Image
@@ -162,7 +167,7 @@ function LaunchModal() {
     // ]
     function onSubmitDM(e){
         if (dmName && DMNAMES.includes(dmName)){
-            window.alert(dmName)
+            window.alert("Dm Name: "+dmName)
             SubmitMethod(dmName)
         } else {
             setError(false)
@@ -187,7 +192,7 @@ function LaunchModal() {
                 <ModalBody>
 
                     <Text fontSize={'md'} pb='1em'> Pleaase Enter Your Name</Text>
-                    <Input type="text" value={dmName} onChange={(e) => { setDMName(e.target.value) }}
+                    <Input type="text" value={dmName} onChange={(e) => { setDMName(e.target.value.toUpperCase()) }}
                     placeholder='Name' width='250px' borderColor={'gray.500'}></Input>
                     {noError === false ? (
                         <div style={{ color: "#ff0000" }}>
@@ -212,11 +217,11 @@ function LaunchModal() {
     }
 
     function onSubmitPlayer(e){
+        // window.alert(PLAYERNAMES.includes(playerName))
 
-        if (playerName && PLAYERNAMES.includes(playerName))
-        {
-            console.log(PLAYERNAMES)
-            // SubmitMethod(playerName)
+        if (playerName && PLAYERNAMES.includes(playerName)){
+            window.alert("Player Name: " + playerName)
+            SubmitMethod(playerName)
         } else {
             setError(false)
         }
@@ -230,7 +235,7 @@ function LaunchModal() {
      *  -If no errors will launch a room with proper dimensions
      * 
      */
-    function PlayerScreen() {
+    function PlayerModal() {
         return(
             <form>
             <ModalContent>
@@ -238,13 +243,13 @@ function LaunchModal() {
                 {/* <ModalCloseButton /> should be deleted when finished */}
                 <ModalBody>
                     <Text fontSize={'md'} pb='1em'> Pleaase Enter Your Name</Text>
-                            <Input type="text" value={playerName} onChange={(e) => { setPlayerName(e.target.value) }} 
-                            placeholder='Name' width='250px' borderColor={'gray.500'}></Input>
-                            {noError === false ? (
-                                <div style={{ color: "#ff0000" }}>
-                                    Invalid Name
-                                </div>) : <p></p>
-                            }
+                    <Input type="text" value={playerName} onChange={(e) => { setPlayerName(e.target.value.toString().toUpperCase()) }} 
+                    placeholder='Name' width='250px' borderColor={'gray.500'}></Input>
+                    {noError === false ? (
+                        <div style={{ color: "#ff0000" }}>
+                            Invalid Name
+                        </div>) : <p></p>
+                    }
                 </ModalBody>
 
                 <ModalFooter>
@@ -264,13 +269,20 @@ function LaunchModal() {
      * This method will fire when the modal's forms have been filled out with valid information. It will then reset and close the modal, and begin rendering the rest of the room;
      */
     async function SubmitMethod(){
-        if(ModalType === "Square")
+        if(ModalType === MODALTYPES.DMModal)
         {
             // await TurnOnRoom(dmName,dmName) // begin Rendering the Room, using only the Length as the measurements
+            await TurnOnRoom(MODALTYPES.DMModal)
+        }
+        else if (ModalType === MODALTYPES.PlayerModal)
+        {
+            await TurnOnRoom(MODALTYPES.PlayerModal)
+            // await TurnOnRoom(dmName,playerName) // begin Rendering the Room, using both the Length and the Width as measurements
         }
         else
         {
-            // await TurnOnRoom(dmName,playerName) // begin Rendering the Room, using both the Length and the Width as measurements
+            window.alert("ERROR Am sending to Player View")
+            await TurnOnRoom(MODALTYPES.PlayerModal)
         }
         onClose() // close the modal.
         setModalType("Layout") // Reset the Modal to layout mode, incase you get back into it somehow.
@@ -323,14 +335,14 @@ function LaunchModal() {
             <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false} closeOnEsc={false} size={'xl'}>
                 <ModalOverlay />
 
-                {ModalType != "DM" && ModalType != "Player" && // If statements that will fill in the body of the modal, based on the State value ModalType. This one is default
+                {ModalType != MODALTYPES.DMModal && ModalType != MODALTYPES.PlayerModal && // If statements that will fill in the body of the modal, based on the State value ModalType. This one is default
                     ChooseLayoutModal()
                 }
-                {ModalType === "DM" &&
+                {ModalType === MODALTYPES.DMModal &&
                     DMModal()
                 }
-                {ModalType === "Player" &&
-                    PlayerScreen()
+                {ModalType === MODALTYPES.PlayerModal &&
+                    PlayerModal()
                 }
             </Modal>
   
@@ -348,12 +360,12 @@ function LaunchModal() {
  */
 async function TurnOnRoom(length,width){
     
-    let tempRoomID = window.prompt("what is the room id")
+    // let tempRoomID = window.prompt("what is the room id")
     
-    const theReturnedStuff = await makeAllWalls(length,width,tempRoomID)
+    // const theReturnedStuff = await makeAllWalls(length,width,tempRoomID)
 
-    numberOfWalls = theReturnedStuff.WallArray.length
-    roomID = theReturnedStuff.roomID
+    // numberOfWalls = theReturnedStuff.WallArray.length
+    // roomID = theReturnedStuff.roomID
     modalComplete = true
 }
 
@@ -371,7 +383,7 @@ function RenderRoomStuff(props) {
       
         return (
             <div className="App" >
-                <Room roomID={ID} numberOfWalls={walls} />
+                <PlayerView />
             </div>
         )
     }
