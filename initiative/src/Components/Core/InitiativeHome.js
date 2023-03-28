@@ -345,6 +345,10 @@ function LaunchModal() {
                     PlayerModal()
                 }
             </Modal>
+
+            {modalComplete &&
+                <RenderRoomStuff/>
+            }
   
         </div>
     )
@@ -358,7 +362,7 @@ function LaunchModal() {
  * @param {double} length 
  * @param {double} width 
  */
-async function TurnOnRoom(length,width){
+async function TurnOnRoom(modalType){
     
     // let tempRoomID = window.prompt("what is the room id")
     
@@ -376,8 +380,9 @@ async function TurnOnRoom(length,width){
 function RenderRoomStuff(props) {
 
   
-    let ID = roomID
-    let walls = numberOfWalls
+    // let ID = roomID
+    // let walls = numberOfWalls
+    window.alert(modalComplete)
   
     if (modalComplete === true) {
       
