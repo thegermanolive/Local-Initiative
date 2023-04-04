@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
-import logo from './logo.svg';
+import Modal from 'react-bootstrap/Modal';
+
 
 import './App.css';
 
-function redirect(){
+const logo = require( './logo.svg');
+
+function Redirect(){
   let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = React.useState(true);
 
   function openModal() {
     setIsOpen(true);
@@ -26,11 +28,12 @@ function redirect(){
     <div>
       <button onClick={openModal}>Open Modal</button>
       <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        className="modal"
-        contentLabel="Example Modal"
+         show={modalIsOpen}
+         onShow={afterOpenModal}
+         onHide={closeModal}
+         backdrop="static"
+         keyboard={false}
+         className="Modal"
       >
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
         <button onClick={closeModal}>close</button>
@@ -50,7 +53,7 @@ function redirect(){
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
@@ -63,7 +66,8 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
+      <Redirect/>
     </div>
   );
 }

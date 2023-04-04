@@ -10,11 +10,12 @@
     "@types/node": "^16.18.23",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
+    "bootstrap": "^5.2.3",
     "neo4j-driver": "^5.7.0",
     "neode": "^0.4.9",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
-    "react-modal": "^3.16.1",
     "react-scripts": "^5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
