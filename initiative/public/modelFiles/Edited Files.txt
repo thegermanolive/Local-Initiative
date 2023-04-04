@@ -1,8 +1,0 @@
-Simple.gltf - 
-removed     
-"images": [
-        {
-            "uri": "S645-True-White-1-1.jpg"
-        }
-    ], 
-from line 9956
