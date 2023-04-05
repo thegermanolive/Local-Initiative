@@ -11,4 +11,8 @@ export class DMController{
         console.log(this.DBString);
 
     }
+
+    getAll = () =>{
+        
+    }
 }

@@ -10,6 +10,10 @@ export function DungeonMaster(){
     let Database:DMController = new DMController();
     console.log(Database);
 
+    async function populateList(){
+
+    }
+
     return(
         <div>
             <h1>DM Screen</h1>
@@ -17,3 +21,4 @@ export function DungeonMaster(){
         </div>
     )
 }
+
