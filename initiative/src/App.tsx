@@ -4,6 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 
 
 import './App.css';
+import { DungeonMaster } from './DM/DM';
+import { Player } from './Player/Player';
 
 const logo = require( './logo.svg');
 enum RedirectType {
@@ -39,13 +41,13 @@ function Redirect(){
 
   if(redirectDest === RedirectType.DM){
     return(
-      <h1>DM Screen</h1>
+      <DungeonMaster/>
     )
 
   }
   else if(redirectDest === RedirectType.Player){
     return(
-      <h1>Player Screen</h1>
+      <Player/>
     )
 
   }
