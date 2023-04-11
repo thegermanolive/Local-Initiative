@@ -2,7 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '../App.css';
 import { DMController } from './DMDatabaseController';
+import PlayerModel from '../Models/Player'
+import { Validator } from 'react';
 
+
+let playerNumber : number = 1
 
 
 export class DungeonMaster extends React.Component{
@@ -63,7 +67,18 @@ export class DungeonMaster extends React.Component{
     }
 
     submitPlayer(){
+        let newPlayer = {
+            playerID: null,
+            playerInitiative: null,
+            playerName: null
+        }
+        console.log(playerNumber)
+        newPlayer.playerID = playerNumber
+        playerNumber = playerNumber + 1
+        newPlayer.playerInitiative = parseFloat((document.getElementById('initVal') as HTMLInputElement).value)
+        newPlayer.playerName = (document.getElementById('playerName') as HTMLInputElement).value
 
+        console.log(Object.assign(newPlayer, PlayerModel))
     }
 
     render(): React.ReactNode {
