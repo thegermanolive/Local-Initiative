@@ -54,7 +54,7 @@ function Redirect(){
   else{
     return (
       <div>
-        <button onClick={openModal}>Open Modal</button>
+        {/* <button onClick={openModal}>Open Modal</button> */}
         <Modal
            show={modalIsOpen}
            onShow={afterOpenModal}

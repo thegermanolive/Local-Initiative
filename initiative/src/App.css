@@ -42,3 +42,9 @@
   margin: auto;
   transform: 'translate(-50%, -50%)';
 }
+
+ol{
+  font-size: xx-large;
+  text-align: start;
+  margin:auto 40%;
+}
