@@ -32,7 +32,7 @@ export class DMController{
 
     async getAll(){
         console.log(this.initiativeList)
-        this.initiativeList = new Array<any>
+        this.initiativeList = new Array<any>()
         await this.instance.all('Player').then(e =>{
             e.forEach(e =>{
                 this.initiativeList.push(e)
@@ -47,5 +47,13 @@ export class DMController{
         // this.initiativeList.sort((a,b) => (a))
         console.log(this.initiativeList)
         
+    }
+
+    async addPlayer(player){
+        const dbPlayer = await this.instance.create('Player',{
+
+        });
+        console.log(dbPlayer)
+
     }
 }
