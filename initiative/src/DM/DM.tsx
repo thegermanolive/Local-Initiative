@@ -13,6 +13,7 @@ export class DungeonMaster extends React.Component{
 
     Database:DMController = new DMController();
     initiativeList : Array<any>
+    interval : NodeJS.Timer
     // console.log(Database);
     constructor(props){
         super(props)
@@ -23,6 +24,10 @@ export class DungeonMaster extends React.Component{
 
     componentDidMount(): void {
         this.populateList()
+        this.interval = setInterval(async () =>{
+            await this.populateList()
+            console.log("in interval")
+        }, 1000*30)
     }
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
         console.log("UPDATED")
@@ -46,26 +51,32 @@ export class DungeonMaster extends React.Component{
         
 
         let order = 1
+        if( initList !== undefined && initList[0] !== undefined){
+            document.getElementById('nextPlayer').innerText= initList[0].playerName
 
-        initList.forEach(e => {
-            let row = document.createElement('tr');
-            row.innerHTML = null
+            initList.forEach(e => {
+                let row = document.createElement('tr');
+                row.innerHTML = null
+        
+                let tableCell1 = document.createElement('td')
+                let tableCell2 = document.createElement('td')
+                let tableCell3 = document.createElement('td')
     
-            let tableCell1 = document.createElement('td')
-            let tableCell2 = document.createElement('td')
-            let tableCell3 = document.createElement('td')
+                tableCell1.appendChild(document.createTextNode(order.toString())) // init order
+                order++
+                tableCell2.appendChild(document.createTextNode(e.playerName)) // player name
+                tableCell3.appendChild(document.createTextNode(e.playerInitiative.toString())) // init val
+                row.appendChild(tableCell1)
+                row.appendChild(tableCell2)
+                row.appendChild(tableCell3)
+    
+                table.appendChild(row);
+    
+            })
+        }
+        
 
-            tableCell1.appendChild(document.createTextNode(order.toString())) // init order
-            order++
-            tableCell2.appendChild(document.createTextNode(e.playerName)) // player name
-            tableCell3.appendChild(document.createTextNode(e.playerInitiative.toString())) // init val
-            row.appendChild(tableCell1)
-            row.appendChild(tableCell2)
-            row.appendChild(tableCell3)
-
-            table.appendChild(row);
-
-        })
+        
 
         
 
@@ -117,6 +128,7 @@ export class DungeonMaster extends React.Component{
 
         if(window.confirm("Do you want to delete ALL?")){
             console.log("CONFIRMED")
+            this.Database.deleteAll()
 
         } else {
             console.log("DENIED")
@@ -155,7 +167,7 @@ export class DungeonMaster extends React.Component{
                 </form>
                 <button type='button' onClick={()=>{this.forceUpdate()}}>Reload</button>
                 <button type='button' onClick={()=>{this.deleteAll()}}>Delete ALL</button>
-                <button type='button' onClick={()=>{this.addTurn()}}>Add Turn</button>
+                {/* <button type='button' onClick={()=>{this.addTurn()}}>Add Turn</button> */}
             </div>
         )
     }

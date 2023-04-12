@@ -27,7 +27,8 @@ export class DMController{
     constructor(){
         // console.log(Neo4jVars);
         this.instance = setupDB();
-        this.addTurn()
+        
+        // this.addTurn()
         // this.getAll()
         // this.getAll();
 
@@ -51,14 +52,29 @@ export class DMController{
         // console.log(this.initiativeList)
         this.initiativeList.sort((a,b) =>(a.playerInitiative > b.playerInitiative ? -1 : 1))
         console.log(this.turnNum)
-        for(let i = 0; i < this.turnNum; i++){
-            this.initiativeList.push(this.initiativeList.shift())
-        }
+        // for(let i = 0; i < this.turnNum; i++){
+        //     this.initiativeList.push(this.initiativeList.shift())
+        // }
         return this.initiativeList
         
     }
     async deleteAll(){
         this.instance.cypher("match (n) detach delete n",{})
+        await this.instance.all('Initiative').then(e =>{
+            e.forEach(e =>{
+                e.delete()
+            })
+        })
+        await this.instance.all('Monster').then(e =>{
+            e.forEach(e =>{
+                e.delete()
+            })
+        })
+        await this.instance.all('Player').then(e =>{
+            e.forEach(e =>{
+                e.delete()
+            })
+        })
         // this.instance.deleteAll('Monster')
     }
 
@@ -68,6 +84,7 @@ export class DMController{
 
     }
 
+    //DONT WWOKR
     async addTurn(){
 
 
