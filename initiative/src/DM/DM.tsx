@@ -27,7 +27,7 @@ export class DungeonMaster extends React.Component{
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
         console.log("UPDATED")
         // this.populateList()
-        window.location.reload()
+        // window.location.reload()
     }
 
     async populateList(){
@@ -36,7 +36,7 @@ export class DungeonMaster extends React.Component{
 
         this.createTableHeaders()
         let initList = await this.Database.getAll()
-        console.log("inDM")
+        // console.log("inDM")
         console.log(initList)
         
         initList.forEach(e =>{
@@ -96,13 +96,13 @@ export class DungeonMaster extends React.Component{
             playerInitiative: null,
             playerName: null
         }
-        console.log(playerNumber)
+        // console.log(playerNumber)
         newPlayer.playerID = playerNumber
         playerNumber = playerNumber + 1
         newPlayer.playerInitiative = parseFloat((document.getElementById('initVal') as HTMLInputElement).value)
         newPlayer.playerName = (document.getElementById('playerName') as HTMLInputElement).value
 
-        console.log(newPlayer)
+        // console.log(newPlayer)
         try{
             await this.Database.addPlayer(newPlayer)
             this.populateList()
@@ -121,6 +121,11 @@ export class DungeonMaster extends React.Component{
         } else {
             console.log("DENIED")
         }
+
+    }
+
+    async addTurn(){
+        await this.Database.addTurn();
 
     }
 
@@ -148,8 +153,9 @@ export class DungeonMaster extends React.Component{
                         this.submitPlayer()
                     }}>Submit</button>
                 </form>
-                <button type='button' onClick={()=>{this.setState({uploadID: Math.random().toString})}}>Reload</button>
+                <button type='button' onClick={()=>{this.forceUpdate()}}>Reload</button>
                 <button type='button' onClick={()=>{this.deleteAll()}}>Delete ALL</button>
+                <button type='button' onClick={()=>{this.addTurn()}}>Add Turn</button>
             </div>
         )
     }
