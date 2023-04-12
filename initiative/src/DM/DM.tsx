@@ -16,10 +16,18 @@ export class DungeonMaster extends React.Component{
     // console.log(Database);
     constructor(props){
         super(props)
+        this.state={
+            uploadID:"1"
+        }
     }
 
     componentDidMount(): void {
         this.populateList()
+    }
+    componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
+        console.log("UPDATED")
+        // this.populateList()
+        window.location.reload()
     }
 
     async populateList(){
@@ -27,23 +35,39 @@ export class DungeonMaster extends React.Component{
         table.innerHTML = null
 
         this.createTableHeaders()
+        let initList = await this.Database.getAll()
+        console.log("inDM")
+        console.log(initList)
+        
+        initList.forEach(e =>{
+            console.log(e)
+        })
+        
+        
+
+        let order = 1
+
+        initList.forEach(e => {
+            let row = document.createElement('tr');
+            row.innerHTML = null
+    
+            let tableCell1 = document.createElement('td')
+            let tableCell2 = document.createElement('td')
+            let tableCell3 = document.createElement('td')
+
+            tableCell1.appendChild(document.createTextNode(order.toString())) // init order
+            order++
+            tableCell2.appendChild(document.createTextNode(e.playerName)) // player name
+            tableCell3.appendChild(document.createTextNode(e.playerInitiative.toString())) // init val
+            row.appendChild(tableCell1)
+            row.appendChild(tableCell2)
+            row.appendChild(tableCell3)
+
+            table.appendChild(row);
+
+        })
 
         
-        let row = document.createElement('tr');
-        row.innerHTML = null
-
-        let tableCell1 = document.createElement('td')
-        let tableCell2 = document.createElement('td')
-        let tableCell3 = document.createElement('td')
-
-        tableCell1.appendChild(document.createTextNode('1')) // init order
-        tableCell2.appendChild(document.createTextNode('testPlayer')) // player name
-        tableCell3.appendChild(document.createTextNode('17.15')) // init val
-        row.appendChild(tableCell1)
-        row.appendChild(tableCell2)
-        row.appendChild(tableCell3)
-
-        table.appendChild(row);
 
     }
 
@@ -66,7 +90,7 @@ export class DungeonMaster extends React.Component{
 
     }
 
-    submitPlayer(){
+    async submitPlayer(){
         let newPlayer = {
             playerID: null,
             playerInitiative: null,
@@ -78,7 +102,30 @@ export class DungeonMaster extends React.Component{
         newPlayer.playerInitiative = parseFloat((document.getElementById('initVal') as HTMLInputElement).value)
         newPlayer.playerName = (document.getElementById('playerName') as HTMLInputElement).value
 
-        console.log(Object.assign(newPlayer, PlayerModel))
+        console.log(newPlayer)
+        try{
+            await this.Database.addPlayer(newPlayer)
+            this.populateList()
+        }
+        catch(e){
+            playerNumber = playerNumber - 1
+            console.log(e)
+        }
+    }
+
+    async deleteAll(){
+
+        if(window.confirm("Do you want to delete ALL?")){
+            console.log("CONFIRMED")
+
+        } else {
+            console.log("DENIED")
+        }
+
+    }
+
+    forceRender(){
+        
     }
 
     render(): React.ReactNode {
@@ -97,8 +144,12 @@ export class DungeonMaster extends React.Component{
                     <input type="text" id="playerName" name="playerName"/><br/><br/>
                     <label htmlFor="initVal">Initiative:</label><br/>
                     <input type="number" id="initVal" name="initVal"/><br/><br/>
-                    <button type="button" onClick={this.submitPlayer}>Submit</button>
+                    <button type="button" onClick={()=>{
+                        this.submitPlayer()
+                    }}>Submit</button>
                 </form>
+                <button type='button' onClick={()=>{this.setState({uploadID: Math.random().toString})}}>Reload</button>
+                <button type='button' onClick={()=>{this.deleteAll()}}>Delete ALL</button>
             </div>
         )
     }

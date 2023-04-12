@@ -32,27 +32,31 @@ export class DMController{
 
     async getAll(){
         console.log(this.initiativeList)
-        this.initiativeList = new Array<any>()
+        this.initiativeList = []
         await this.instance.all('Player').then(e =>{
             e.forEach(e =>{
-                this.initiativeList.push(e)
+                e.toJson().then(e =>{this.initiativeList.push(e)})
             })
         })
-        await this.instance.all('Monster').then(e =>{
-            e.forEach(e =>{
-                this.initiativeList.push(e)
-            })
-        })
+        // await this.instance.all('Monster').then(e =>{
+        //     e.forEach(e =>{
+        //         e.toJson().then(e =>{this.initiativeList.push(e)})
+        //     })
+        // })
         
         // this.initiativeList.sort((a,b) => (a))
         console.log(this.initiativeList)
+        this.initiativeList.sort((a,b) =>(a.playerInitiative > b.playerInitiative ? -1 : 1))
+        return this.initiativeList
         
+    }
+    async deleteAll(){
+        this.instance.cypher("match (n) detach delete n",{})
+        this.instance.deleteAll('Monster')
     }
 
     async addPlayer(player){
-        const dbPlayer = await this.instance.create('Player',{
-
-        });
+        const dbPlayer = await this.instance.create('Player',player);
         console.log(dbPlayer)
 
     }
