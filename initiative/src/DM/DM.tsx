@@ -51,7 +51,7 @@ export class DungeonMaster extends React.Component{
         
 
         let order = 1
-        if( initList !== undefined && initList[0] !== undefined){
+        if( initList !== undefined && initList[0] !== undefined && initList.length > 0){
             document.getElementById('nextPlayer').innerText= initList[0].playerName
 
             initList.forEach(e => {
@@ -121,6 +121,9 @@ export class DungeonMaster extends React.Component{
         catch(e){
             playerNumber = playerNumber - 1
             console.log(e)
+        } finally{
+            (document.getElementById('initVal') as HTMLInputElement).value = "";
+            (document.getElementById('playerName') as HTMLInputElement).value= "";
         }
     }
 
@@ -165,9 +168,9 @@ export class DungeonMaster extends React.Component{
                         this.submitPlayer()
                     }}>Submit</button>
                 </form>
-                <button type='button' onClick={()=>{this.forceUpdate()}}>Reload</button>
-                <button type='button' onClick={()=>{this.deleteAll()}}>Delete ALL</button>
-                {/* <button type='button' onClick={()=>{this.addTurn()}}>Add Turn</button> */}
+                {/* <button type='button' onClick={()=>{this.forceUpdate()}}>Reload</button> */}
+                <button type='button' onClick={()=>{this.deleteAll()}} className="delButton">Delete ALL</button>
+                <button type='button' onClick={()=>{this.addTurn()}}>Add Turn</button>
             </div>
         )
     }

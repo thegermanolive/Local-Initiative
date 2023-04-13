@@ -66,3 +66,11 @@ tr{
 td, th{
   padding: 0 5px;
 }
+
+form{
+  margin-bottom: 1em;
+}
+
+.delButton{
+  background-color: red;
+}

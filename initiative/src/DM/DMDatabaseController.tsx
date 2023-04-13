@@ -47,24 +47,39 @@ export class DMController{
         //         e.toJson().then(e =>{this.initiativeList.push(e)})
         //     })
         // })
+        await this.instance.all('Initiative').then(e=>{
+            e.forEach(e =>{
+                e.toJson().then(e =>{this.turnNum = e.turnNum})
+                e.delete()
+            })
+        })
         
+        if(this.turnNum === undefined || !(this.turnNum > 0)  ){
+            this.turnNum = 0
+            let newTurnNum = {
+                initiativeID: 1,
+                turnNum: 0
+            }
+            await this.instance.create('Initiative', newTurnNum)
+        }
         // this.initiativeList.sort((a,b) => (a))
         // console.log(this.initiativeList)
         this.initiativeList.sort((a,b) =>(a.playerInitiative > b.playerInitiative ? -1 : 1))
+        console.log("turn num")
         console.log(this.turnNum)
-        // for(let i = 0; i < this.turnNum; i++){
-        //     this.initiativeList.push(this.initiativeList.shift())
-        // }
+        for(let i = 0; i < this.turnNum; i++){
+            this.initiativeList.push(this.initiativeList.shift())
+        }
         return this.initiativeList
         
     }
     async deleteAll(){
         this.instance.cypher("match (n) detach delete n",{})
-        await this.instance.all('Initiative').then(e =>{
-            e.forEach(e =>{
-                e.delete()
-            })
-        })
+        // await this.instance.all('Initiative').then(e =>{
+        //     e.forEach(e =>{
+        //         e.delete()
+        //     })
+        // })
         await this.instance.all('Monster').then(e =>{
             e.forEach(e =>{
                 e.delete()
@@ -93,6 +108,7 @@ export class DMController{
             await this.instance.all('Initiative').then(e=>{
                 e.forEach(e =>{
                     e.toJson().then(e =>{this.turnNum = e.turnNum})
+                    e.delete()
                 })
             })
         // } catch(e) {
@@ -104,8 +120,13 @@ export class DMController{
         //     console.log(newTurn)
         // }
 
-        if(this.turnNum === undefined){
-            this.turnNum = 1;
+        let newTurnNum = {
+            initiativeID: 1,
+            turnNum: 0
+        }
+
+        if(this.turnNum === undefined || !(this.turnNum > 0)){
+            this.turnNum = 0;
             let newTurnNum = {
                 initiativeID: 1,
                 turnNum: 0
@@ -114,9 +135,8 @@ export class DMController{
             console.log(newTurn)
         }
         else{
-            this.instance.create('Initiative', {initiativeID: 1}).then( e =>{
-                e.update({turnNum: (this.turnNum+1)})
-            })
+            newTurnNum.turnNum = this.turnNum + 1
+            this.instance.create('Initiative', newTurnNum)
         }
         console.log(this.turnNum)
 
